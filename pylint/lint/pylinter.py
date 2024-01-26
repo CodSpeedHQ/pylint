@@ -1143,7 +1143,7 @@ class PyLinter(
             if verbose:
                 checked_files_count = self.stats.node_count["module"]
                 unchecked_files_count = self.stats.undocumented["module"]
-                checked_files = ', '.join(self.stats.modules_names)
+                checked_files = ", ".join(self.stats.modules_names)
                 msg += f"\nChecked {checked_files_count} files ({checked_files}), skipped {unchecked_files_count} files"
 
         if self.config.score:
