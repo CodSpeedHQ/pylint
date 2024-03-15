@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 from pytest import CaptureFixture
 
-from pylint.lint.pylinter import PyLinter, MANAGER
+from pylint.lint.pylinter import MANAGER, PyLinter
 from pylint.utils import FileState
 
 
@@ -51,7 +51,7 @@ def test_crash_during_linting(
 
 
 def test_open_pylinter_denied_modules(linter: PyLinter) -> None:
-    """test PyLinter open() adds ignored modules to Astroid manager deny list"""
+    """Test PyLinter open() adds ignored modules to Astroid manager deny list."""
     MANAGER.module_denylist = {"mod1"}
     linter.config.ignored_modules = ["mod2", "mod3"]
     linter.open()
