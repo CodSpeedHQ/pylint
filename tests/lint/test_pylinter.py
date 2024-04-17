@@ -53,6 +53,9 @@ def test_crash_during_linting(
 def test_open_pylinter_denied_modules(linter: PyLinter) -> None:
     """Test PyLinter open() adds ignored modules to Astroid manager deny list."""
     MANAGER.module_denylist = {"mod1"}
-    linter.config.ignored_modules = ["mod2", "mod3"]
-    linter.open()
-    assert MANAGER.module_denylist == {"mod1", "mod2", "mod3"}
+    try:
+        linter.config.ignored_modules = ["mod2", "mod3"]
+        linter.open()
+        assert MANAGER.module_denylist == {"mod1", "mod2", "mod3"}
+    finally:
+        MANAGER.module_denylist = set()
