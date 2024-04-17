@@ -176,9 +176,6 @@ class TestEstablishBaselineBenchmarks:
         We do not register any checkers except the default 'main', so the cost is just
         that of the system with a lot of files registered
         """
-        if benchmark.disabled:
-            benchmark(print, "skipping, only benchmark large file counts")
-            return  # _only_ run this test is profiling
         linter = PyLinter(reporter=Reporter())
         linter.config.jobs = 1
         fileinfos = [self.empty_filepath for _ in range(self.lot_of_files)]
@@ -197,9 +194,6 @@ class TestEstablishBaselineBenchmarks:
         register any checkers except the default 'main', so the cost is just that of
         the check_parallel system across 2 workers, plus the overhead of PyLinter
         """
-        if benchmark.disabled:
-            benchmark(print, "skipping, only benchmark large file counts")
-            return  # _only_ run this test is profiling
         linter = PyLinter(reporter=Reporter())
         linter.config.jobs = 2
         fileinfos = [self.empty_filepath for _ in range(self.lot_of_files)]
@@ -218,9 +212,6 @@ class TestEstablishBaselineBenchmarks:
         We use a checker that does no work, so the cost is just that of the system at
         scale
         """
-        if benchmark.disabled:
-            benchmark(print, "skipping, only benchmark large file counts")
-            return  # _only_ run this test is profiling
         linter = PyLinter(reporter=Reporter())
         linter.config.jobs = 1
         linter.register_checker(NoWorkChecker(linter))
@@ -241,9 +232,6 @@ class TestEstablishBaselineBenchmarks:
         We use a checker that does no work, so the cost is just that of the system at
         scale, across workers
         """
-        if benchmark.disabled:
-            benchmark(print, "skipping, only benchmark large file counts")
-            return  # _only_ run this test is profiling
         linter = PyLinter(reporter=Reporter())
         linter.config.jobs = 2
         linter.register_checker(NoWorkChecker(linter))
@@ -266,9 +254,6 @@ class TestEstablishBaselineBenchmarks:
         We expect this benchmark to take very close to
         `numfiles*SleepingChecker.sleep_duration`
         """
-        if benchmark.disabled:
-            benchmark(print, "skipping, do not want to sleep in main tests")
-            return  # _only_ run this test is profiling
         linter = PyLinter(reporter=Reporter())
         linter.register_checker(SleepingChecker(linter))
 
@@ -295,9 +280,6 @@ class TestEstablishBaselineBenchmarks:
         Because of the cost of the framework and system the performance difference will
         *not* be 1/2 of -j1 versions.
         """
-        if benchmark.disabled:
-            benchmark(print, "skipping, do not want to sleep in main tests")
-            return  # _only_ run this test is profiling
         linter = PyLinter(reporter=Reporter())
         linter.config.jobs = 2
         linter.register_checker(SleepingChecker(linter))
@@ -334,9 +316,6 @@ class TestEstablishBaselineBenchmarks:
 
         ... that's the intent at least.
         """
-        if benchmark.disabled:
-            benchmark(print, "skipping, only benchmark large file counts")
-            return  # _only_ run this test is profiling
         linter = PyLinter()
 
         # Register all checkers/extensions and enable them
