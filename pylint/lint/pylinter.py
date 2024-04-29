@@ -322,11 +322,6 @@ class PyLinter(
         self.options: Options = options + _make_linter_options(self)
         for opt_group in option_groups:
             self.option_groups_descs[opt_group[0]] = opt_group[1]
-        self._option_groups: tuple[tuple[str, str], ...] = (
-            *option_groups,
-            ("Messages control", "Options controlling analysis messages"),
-            ("Reports", "Options related to output formatting and reporting"),
-        )
         self.fail_on_symbols: list[str] = []
         """List of message symbols on which pylint should fail, set by --fail-on."""
         self._error_mode = False
@@ -488,13 +483,12 @@ class PyLinter(
         self._checkers[checker.name].append(checker)
         for r_id, r_title, r_cb in checker.reports:
             self.register_report(r_id, r_title, r_cb, checker)
-        if hasattr(checker, "msgs"):
-            self.msgs_store.register_messages_from_checker(checker)
-            for message in checker.messages:
-                if not message.default_enabled:
-                    self.disable(message.msgid)
+        self.msgs_store.register_messages_from_checker(checker)
+        for message in checker.messages:
+            if not message.default_enabled:
+                self.disable(message.msgid)
         # Register the checker, but disable all of its messages.
-        if not getattr(checker, "enabled", True):
+        if not checker.enabled:
             self.disable(checker.name)
 
     def enable_fail_on_messages(self) -> None:

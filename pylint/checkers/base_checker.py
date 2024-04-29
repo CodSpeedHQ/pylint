@@ -22,7 +22,6 @@ from pylint.typing import (
     ExtraMessageOptions,
     MessageDefinitionTuple,
     OptionDict,
-    Options,
     ReportsCallable,
 )
 from pylint.utils import get_rst_section, get_rst_title
@@ -35,8 +34,6 @@ if TYPE_CHECKING:
 class BaseChecker(_ArgumentsProvider):
     # checker name (you may reuse an existing one)
     name: str = ""
-    # ordered list of options to control the checker behaviour
-    options: Options = ()
     # messages issued by this checker
     msgs: dict[str, MessageDefinitionTuple] = {}
     # reports issued by this checker
