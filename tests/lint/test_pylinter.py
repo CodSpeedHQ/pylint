@@ -16,7 +16,6 @@ from unittest.mock import patch
 import pytest
 from pytest import CaptureFixture
 
-
 from pylint.lint.pylinter import (
     FORCE_COLOR,
     NO_COLOR,

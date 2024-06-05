@@ -281,7 +281,6 @@ def _handle_force_color_no_color(reporter: list[reporters.BaseReporter]) -> None
     | unset        | unset         | /               | not colorized                                              |
     +--------------+---------------+-----------------+------------------------------------------------------------+
     """
-
     no_color = _is_env_set_and_non_empty(NO_COLOR)
     force_color = _is_env_set_and_non_empty(FORCE_COLOR) or _is_env_set_and_non_empty(
         PY_COLORS
