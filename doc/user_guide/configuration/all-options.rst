@@ -120,7 +120,7 @@ Standard Checkers
 
 --ignored-modules
 """""""""""""""""
-*List of module names for which member attributes should not be checked (useful for modules/projects where namespaces are manipulated during runtime and thus existing member attributes cannot be deduced by static analysis). It supports qualified module names, as well as Unix pattern matching.*
+*List of module names for which member attributes should not be checked and will not be imported (useful for modules/projects where namespaces are manipulated during runtime and thus existing member attributes cannot be deduced by static analysis). It supports qualified module names, as well as Unix pattern matching.*
 
 **Default:**  ``()``
 
@@ -165,6 +165,13 @@ Standard Checkers
 *Pickle collected data for later comparisons.*
 
 **Default:**  ``True``
+
+
+--prefer-stubs
+""""""""""""""
+*Resolve imports to .pyi stubs if available. May reduce no-member messages and increase not-an-iterable messages.*
+
+**Default:**  ``False``
 
 
 --py-version
@@ -270,6 +277,8 @@ Standard Checkers
    # output-format =
 
    persistent = true
+
+   prefer-stubs = false
 
    py-version = "sys.version_info[:2]"
 
@@ -1196,6 +1205,14 @@ Standard Checkers
 **Default:**  ``('sys.exit', 'argparse.parse_error')``
 
 
+--suggest-join-with-non-empty-separator
+"""""""""""""""""""""""""""""""""""""""
+*Let 'consider-using-join' be raised when the separator to join on would be non-empty (resulting in expected fixes of the type: ``"- " + "
+- ".join(items)``)*
+
+**Default:**  ``True``
+
+
 
 .. raw:: html
 
@@ -1210,6 +1227,8 @@ Standard Checkers
    max-nested-blocks = 5
 
    never-returning-functions = ["sys.exit", "argparse.parse_error"]
+
+   suggest-join-with-non-empty-separator = true
 
 
 

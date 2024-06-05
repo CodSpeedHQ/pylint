@@ -16,6 +16,7 @@ from unittest.mock import patch
 import pytest
 from pytest import CaptureFixture
 
+
 from pylint.lint.pylinter import (
     FORCE_COLOR,
     NO_COLOR,
@@ -188,3 +189,23 @@ def test_handle_force_color_no_color(
             assert len(recwarn.list) == 0  # no warning expected
     else:
         assert len(recwarn.list) == 0  # no warning expected
+
+
+def test_open_pylinter_denied_modules(linter: PyLinter) -> None:
+    """Test PyLinter open() adds ignored modules to Astroid manager deny list."""
+    MANAGER.module_denylist = {"mod1"}
+    try:
+        linter.config.ignored_modules = ["mod2", "mod3"]
+        linter.open()
+        assert MANAGER.module_denylist == {"mod1", "mod2", "mod3"}
+    finally:
+        MANAGER.module_denylist = set()
+
+
+def test_open_pylinter_prefer_stubs(linter: PyLinter) -> None:
+    try:
+        linter.config.prefer_stubs = True
+        linter.open()
+        assert MANAGER.prefer_stubs
+    finally:
+        MANAGER.prefer_stubs = False
