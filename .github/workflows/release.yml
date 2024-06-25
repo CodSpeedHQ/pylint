@@ -31,7 +31,7 @@ jobs:
         run: |
           # Remove dist, build, and pylint.egg-info
           # when building locally for testing!
-          python -m pip install twine build
+          python -m pip install twine!=5.1.0 build
       - name: Build distributions
         run: |
           python -m build
