@@ -160,8 +160,10 @@ class EncodingChecker(BaseTokenChecker, BaseRawFileChecker):
                         args=match.group("msg"),
                         line=token_info.start[0],
                     )
-            elif self.linter.config.check_fixme_in_docstring:
-                if self._is_multiline_docstring(token_info):
+            elif self.linter.config.check_fixme_in_docstring and self._is_docstring(
+                token_info
+            ):
+                if "\n" in token_info.line.rstrip():  # multi-line docstring
                     docstring_lines = token_info.string.split("\n")
                     for line_no, line in enumerate(docstring_lines):
                         if match := self._multiline_docstring_fixme_pattern.match(line):
@@ -179,11 +181,9 @@ class EncodingChecker(BaseTokenChecker, BaseRawFileChecker):
                         line=token_info.start[0],
                     )
 
-    def _is_multiline_docstring(self, token_info: tokenize.TokenInfo) -> bool:
-        return (
-            token_info.type == tokenize.STRING
-            and (token_info.line.lstrip().startswith(('"""', "'''")))
-            and "\n" in token_info.line.rstrip()
+    def _is_docstring(self, token_info: tokenize.TokenInfo) -> bool:
+        return token_info.type == tokenize.STRING and (
+            token_info.line.lstrip().startswith(('"""', "'''"))
         )
 
 
