@@ -175,9 +175,11 @@ group are mutually exclusive.",
                 sys.exit(code)
             return
 
-        # Display help if there are no files to lint or no checks enabled
-        if not args or len(linter.config.disable) == len(
-            linter.msgs_store._messages_definitions
+        # Display help if there are no files to lint or only internal checks enabled (`--disable=all`)
+        if not args or (
+            len(linter.config.enable) == 0
+            and len(linter.config.disable)
+            == len(linter.msgs_store.messages) - len(linter.default_enabled_messages)
         ):
             print("No files to lint: exiting.")
             sys.exit(32)
